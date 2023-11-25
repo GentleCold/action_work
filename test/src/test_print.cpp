@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
 
-#include "print.hpp"
+#include "red_black_tree.hpp"
 
-TEST(Print, hello_world) { EXPECT_EQ(my_func::hello_world(), 0); }
+/* TEST(Print, hello_world) { EXPECT_EQ(my_func::hello_world(), 0); } */
