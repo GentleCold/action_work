@@ -4,5 +4,4 @@
 
 测试方法：在test/src中添加测试用例
 
-测试库：geogle test
-
+测试库：google test
