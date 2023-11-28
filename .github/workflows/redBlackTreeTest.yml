@@ -1,0 +1,32 @@
+name: C++ Red-Black Tree CI
+
+on: 
+    push:
+        branches:
+            - master
+
+jobs: 
+    build: 
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v2
+            - name: install dependencies
+              run: |
+                sudo apt-get update    
+                sudo apt-get install -y build-essential cmake 
+            - name: install gtest
+              run: |
+                sudo apt-get install libgtest-dev
+                cd /usr/src/gtest
+                sudo cmake .
+                sudo make 
+                sudo cp lib/*.a /usr/lib
+            - name: build
+              run: bash ./setup.sh
+            - name: test
+              run: |
+                cd bin/
+                ./test_all
+
+              
