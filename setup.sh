@@ -9,14 +9,9 @@ if [ ! -d build ]; then
 fi
 
 if [ ! -d lib ]; then
-	mkdir lib/shared lib/static
+	mkdir -p lib/shared lib/static
 fi
 
 cd build
 cmake ..
 make -j4
-
-cd ../bin
-./test_all
-
-cd ../
