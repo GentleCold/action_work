@@ -7,7 +7,7 @@ on:
 
 jobs: 
     build: 
-        runs-on: ubuntu-latest-with-sudo
+        runs-on: ubuntu-latest
         steps:
             - name: checkout code
               uses: actions/checkout@v2
@@ -19,9 +19,9 @@ jobs:
               run: |
                 sudo apt-get install libgtest-dev
                 cd /usr/src/gtest
-                cmake .
-                make 
-                cp lib/*.a /usr/lib
+                sudo cmake .
+                sudo make 
+                sudo cp lib/*.a /usr/lib
             - name: build
               run: bash ./setup.sh
             - name: test
