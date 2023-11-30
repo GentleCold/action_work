@@ -8,25 +8,25 @@ namespace myalm {
 template <class K, class V>
 class RedBlackTree : public BinarySearchTree<K, V> {
  public:
-  void insert(const std::pair<const K, V> &) override;
-  void erase(const K &) override;
+  int insert(const std::pair<const K, V> &) override;
+  int erase(const K &) override;
+  
 
-#ifdef DEBUG
   int test_if_red_black_tree();
   bool _test_if_red_link_red(BinaryTreeNode<std::pair<const K, V>> *p) const;
   int _test_if_black_height_equal(
       BinaryTreeNode<std::pair<const K, V>> *p) const;
-#endif
+
  protected:
   void _left_rotate(BinaryTreeNode<std::pair<const K, V>> *x);
   void _right_rotate(BinaryTreeNode<std::pair<const K, V>> *x);
 };
 
 template <class K, class V>
-void RedBlackTree<K, V>::insert(const std::pair<const K, V> &v) {
+int RedBlackTree<K, V>::insert(const std::pair<const K, V> &v) {
   BinaryTreeNode<std::pair<const K, V>> *p =
       BinarySearchTree<K, V>::_insert(v);  // insert new node
-  if (!p) return;                          // if the node is exiting
+  if (!p) return 0;                          // if the node is exiting
 
   // justify node
   while (p->p->color) {
@@ -69,13 +69,14 @@ void RedBlackTree<K, V>::insert(const std::pair<const K, V> &v) {
     }
     BinaryTree<std::pair<const K, V>>::_root->color = false;
   }
+  return 0;
 }
 
 template <class K, class V>
-void RedBlackTree<K, V>::erase(const K &key) {
+int RedBlackTree<K, V>::erase(const K &key) {
   BinaryTreeNode<std::pair<const K, V>> *p =
       BinarySearchTree<K, V>::_search(key);
-  if (!p) return;
+  if (!p) return -1;
 
   BinaryTreeNode<std::pair<const K, V>> *c = (p->right) ? p->right : p->left,
                                         *x = c, *xp = p->p;
@@ -125,7 +126,7 @@ void RedBlackTree<K, V>::erase(const K &key) {
   }
 
   delete p;
-  if (!(--BinaryTree<std::pair<const K, V>>::_size)) return;
+  if (!(--BinaryTree<std::pair<const K, V>>::_size)) return 0;
 
   // justify color, in this case, p have zero or one child
   if (!color && xp) {
@@ -194,6 +195,7 @@ void RedBlackTree<K, V>::erase(const K &key) {
 
     x->color = false;
   }
+  return 0;
 }
 
 template <class K, class V>
@@ -244,8 +246,9 @@ void RedBlackTree<K, V>::_right_rotate(
   x->p = y;
 }
 
+
 // test function
-#ifdef DEBUG
+
 template <class K, class V>
 int RedBlackTree<K, V>::test_if_red_black_tree() {
   BinaryTreeNode<std::pair<const K, V>> *p =
@@ -283,7 +286,7 @@ int RedBlackTree<K, V>::_test_if_black_height_equal(
   }
   return i;
 }
-#endif
+
 
 }  // namespace myalm
 
