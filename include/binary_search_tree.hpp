@@ -13,13 +13,12 @@ class BinarySearchTree : public BinaryTree<std::pair<const K, V>> {
   std::pair<const K, V>* min() const;
   std::pair<const K, V>* prev(const K&) const;
   std::pair<const K, V>* next(const K&) const;
-  virtual void insert(const std::pair<const K, V>&);
-  virtual void erase(const K&);
+  virtual int insert(const std::pair<const K, V>&);
+  virtual int erase(const K&);
 
-#ifdef DEBUG
+
   bool test_if_binary_search_tree();
   bool _test_if_binary_search_tree(BinaryTreeNode<std::pair<const K, V>>*);
-#endif
 
  protected:
   BinaryTreeNode<std::pair<const K, V>>* _insert(const std::pair<const K, V>&);
@@ -35,14 +34,15 @@ class BinarySearchTree : public BinaryTree<std::pair<const K, V>> {
 };
 
 template <class K, class V>
-void BinarySearchTree<K, V>::insert(const std::pair<const K, V>& v) {
+int BinarySearchTree<K, V>::insert(const std::pair<const K, V>& v) {
   _insert(v);
+  return 0;
 }
 
 template <class K, class V>
-void BinarySearchTree<K, V>::erase(const K& key) {
+int BinarySearchTree<K, V>::erase(const K& key) {
   BinaryTreeNode<std::pair<const K, V>>* p = _search(key);
-  if (!p) return;
+  if (!p) return -1;
 
   BinaryTreeNode<std::pair<const K, V>>* c = (p->right) ? p->right : p->left;
 
@@ -79,6 +79,7 @@ void BinarySearchTree<K, V>::erase(const K& key) {
 
   BinaryTree<std::pair<const K, V>>::_size--;
   delete p;
+  return 0;
 }
 
 template <class K, class V>
@@ -222,7 +223,7 @@ BinaryTreeNode<std::pair<const K, V>>* BinarySearchTree<K, V>::_next(
 
 // test function
 
-#ifdef DEBUG
+
 template <class K, class V>
 bool BinarySearchTree<K, V>::test_if_binary_search_tree() {
   BinaryTreeNode<std::pair<const K, V>>* p =
@@ -250,7 +251,7 @@ bool BinarySearchTree<K, V>::_test_if_binary_search_tree(
   if (!_test_if_binary_search_tree(p->right)) return false;
   return true;
 }
-#endif
+
 
 }  // namespace myalm
 
